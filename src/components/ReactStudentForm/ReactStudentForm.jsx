@@ -4,24 +4,35 @@ import StudentForm from "./StudentForm";
 import {
   deleteStudentAction,
   editStudentAction,
+  searchStudentAction,
 } from "../../redux/reducers/arrStudentReducer";
 
 export class ReactStudentForm extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-
-  //     },
-  //   };
-
-  // }
   render() {
-    let { arrStudentState, dispatch } = this.props;
+    let { arrStudentState, itemStudentSearch, dispatch } = this.props;
     console.log(arrStudentState);
     return (
       <div className="container ">
         <h1 className="text-center mt-4">Quản lý sinh viên</h1>
         <StudentForm />
+        <div className="form-group form-Search card my-5 ">
+          <p className="card-top py-3 ps-3 h5 bg-dark text-white mb-0">
+            Nhập vào sinh viên cần tìm
+          </p>
+          <input
+            className="form-control card-body"
+            id="txtSearch"
+            placeholder="Nhập vào sinh viên cần tìm"
+            onChange={(e) => {
+              let keyword = e.target.value;
+
+              const action = searchStudentAction(keyword);
+
+              dispatch(action);
+            }}
+          />
+        </div>
+
         <table className="table text-center mt-5 ">
           <thead className="table-dark">
             <tr>
@@ -74,6 +85,7 @@ export class ReactStudentForm extends Component {
 
 const mapStateToProps = (state) => ({
   arrStudentState: state.arrStudentState.arrStudent,
+  itemStudentSearch: state.arrStudentState.itemSearch,
 });
 
 export default connect(mapStateToProps)(ReactStudentForm);

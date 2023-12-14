@@ -75,7 +75,7 @@ export class StudentForm extends Component {
                     className="form-control"
                     id="id"
                     name="id"
-                    value={valueEdit.id}
+                    //value={valueEdit.id}
                     onInput={(e) => {
                       const { id, value } = e.target;
 
@@ -84,12 +84,12 @@ export class StudentForm extends Component {
                         value: value,
                       });
 
-                      this.setState((prevState) => ({
-                        valueEdit: {
-                          ...prevState.valueEdit,
-                          [id]: value,
-                        },
-                      }));
+                      // this.setState((prevState) => ({
+                      //   valueEdit: {
+                      //     ...prevState.valueEdit,
+                      //     [id]: value,
+                      //   },
+                      // }));
                       this.props.dispatch(action);
                     }}
                   />

@@ -21,6 +21,7 @@ const initialState = {
     phone: "",
     email: "",
   },
+  itemSearch: [],
 };
 
 const arrStudentReducer = createSlice({
@@ -51,6 +52,17 @@ const arrStudentReducer = createSlice({
         state.arrStudent[stuIndex] = action.payload;
       }
     },
+    searchStudentAction: (state, action) => {
+      //   const keyword = action.payload.toLowerCase();
+      //   console.log(keyword);
+      //   const searchItem = state.arrStudent.filter((item) =>
+      //     item.id.includes(keyword)
+      //   );
+      //   console.log(searchItem);
+      // state.itemSearch.push(...searchItem);
+      // console.log(state.itemSearch);
+      //state.arrStudent = state.itemSearch;
+    },
   },
 });
 
@@ -59,6 +71,7 @@ export const {
   deleteStudentAction,
   updateStudentAction,
   editStudentAction,
+  searchStudentAction,
 } = arrStudentReducer.actions;
 
 export default arrStudentReducer.reducer;

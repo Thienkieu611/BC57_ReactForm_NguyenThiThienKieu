@@ -1,28 +1,45 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { handelChangeInputAction } from "../../redux/reducers/valuesReducer";
-import { addStudentAction } from "../../redux/reducers/arrStudentReducer";
+import {
+  addStudentAction,
+  editStudentAction,
+} from "../../redux/reducers/arrStudentReducer";
 
 export class StudentForm extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     valuesState: {
-  //       id: "",
-  //       name: "",
-  //       phone: "",
-  //       email: "",
+  constructor(props) {
+    super(props);
+    this.state = {
+      valueEdit: props.valuesState,
+    };
+  }
+  static getDerivedStateFromProps(newProps, currentState) {
+    // console.log("new", newProps);
+    // console.log("curr", currentState.valueEdit);
+
+    if (currentState.valueEdit.id !== newProps.studentEditState.id) {
+      return {
+        valueEdit: newProps.studentEditState,
+      };
+    }
+
+    return null;
+  }
+  // setStateInput = (e) => {
+  //   this.setState({
+  //     valueEdit: e.target.value,
+  //   });
+  // };'
+
+  // handleInputChange = (id, value) => {
+  //   // Tạo một bản sao mới của object state và cập nhật giá trị mới
+  //   this.setState((prevState) => ({
+  //     valueEdit: {
+  //       ...prevState.valueEdit,
+  //       [id]: value,
   //     },
-  //   };
-  // }
-  // static getDerivedStateFromProps(newProps, currentState) {
-  //   if (newProps.studentEditState.id !== currentState.valuesState.id) {
-  //     currentState.valuesState = { ...newProps.studentEditState };
-  //   }
-
-  //   return currentState.valuesState;
-  // }
-
+  //   }));
+  // };
   render() {
     let {
       valuesState,
@@ -31,13 +48,20 @@ export class StudentForm extends Component {
       arrStudentState,
       studentEditState,
     } = this.props;
-    //let { id, name, phone, email } = this.props.studentEditState;
-    console.log(studentEditState.id);
 
-    //console.log("err", studentEditState);
+    let { valueEdit } = this.state;
+
+    console.log("edit", valueEdit);
     return (
       <div className=" mt-5">
-        <form className="card">
+        <form
+          className="card"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const action = addStudentAction(valuesState);
+            this.props.dispatch(action);
+          }}
+        >
           <div className="card-header bg-dark text-white h4 p-3">
             Thông tin sinh viên
           </div>
@@ -51,14 +75,21 @@ export class StudentForm extends Component {
                     className="form-control"
                     id="id"
                     name="id"
-                    value={studentEditState.id}
+                    value={valueEdit.id}
                     onInput={(e) => {
                       const { id, value } = e.target;
+
                       const action = handelChangeInputAction({
                         id: id,
                         value: value,
                       });
 
+                      this.setState((prevState) => ({
+                        valueEdit: {
+                          ...prevState.valueEdit,
+                          [id]: value,
+                        },
+                      }));
                       this.props.dispatch(action);
                     }}
                   />
@@ -71,7 +102,7 @@ export class StudentForm extends Component {
                     className="form-control"
                     id="phone"
                     name="phone"
-                    value={studentEditState.phone}
+                    //value={studentEdit.phone}
                     onInput={(e) => {
                       const { id, value } = e.target;
                       const action = handelChangeInputAction({
@@ -93,7 +124,7 @@ export class StudentForm extends Component {
                     className="form-control"
                     id="name"
                     name="name"
-                    value={studentEditState.name}
+                    //value={name}
                     onInput={(e) => {
                       const { id, value } = e.target;
                       const action = handelChangeInputAction({
@@ -113,7 +144,7 @@ export class StudentForm extends Component {
                     className="form-control"
                     id="email"
                     name="email"
-                    value={studentEditState.email}
+                    //value={email}
                     onInput={(e) => {
                       const { id, value } = e.target;
                       const action = handelChangeInputAction({
@@ -130,18 +161,12 @@ export class StudentForm extends Component {
             </div>
           </div>
           <div className="card-footer p-3">
-            <button
-              disabled={!isSubmit}
-              className="btn btn-success"
-              onClick={(e) => {
-                e.preventDefault();
-                const action = addStudentAction(valuesState);
-                this.props.dispatch(action);
-              }}
-            >
+            <button disabled={!isSubmit} className="btn btn-success">
               Thêm sinh viên
             </button>
-            <button className="btn btn-danger mx-2">Cập nhật sinh viên</button>
+            <button disabled={!isSubmit} className="btn btn-danger mx-2">
+              Cập nhật sinh viên
+            </button>
           </div>
         </form>
       </div>
@@ -155,6 +180,7 @@ const mapStateToProps = (state) => ({
   isSubmit: state.valuesState.isSubmit,
   arrStudentState: state.arrStudentState.arrStudent,
   studentEditState: state.arrStudentState.studentEdit,
+  //currentState: state.valuesState,
 });
 
 export default connect(mapStateToProps)(StudentForm);

@@ -41,10 +41,16 @@ const arrStudentReducer = createSlice({
       state.studentEdit = action.payload;
       console.log(state.studentEdit);
     },
-    // updateStudentAction: (state, action) => {
-    //   //find stu có id bằng stu update
-    //   let stu = state.arrStudent.find((stu) => stu.id === action.payload);
-    // },
+    updateStudentAction: (state, action) => {
+      //find stu có id bằng stu update
+      let stuIndex = state.arrStudent.findIndexΩ(
+        (stu) => stu.id === action.payload.id
+      );
+      // Nếu tìm thấy sinh viên, cập nhật thông tin
+      if (stuIndex !== -1) {
+        state.arrStudent[stuIndex] = action.payload;
+      }
+    },
   },
 });
 

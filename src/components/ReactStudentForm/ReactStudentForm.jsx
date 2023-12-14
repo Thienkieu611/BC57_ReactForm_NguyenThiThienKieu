@@ -7,6 +7,14 @@ import {
 } from "../../redux/reducers/arrStudentReducer";
 
 export class ReactStudentForm extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+
+  //     },
+  //   };
+
+  // }
   render() {
     let { arrStudentState, dispatch } = this.props;
     console.log(arrStudentState);

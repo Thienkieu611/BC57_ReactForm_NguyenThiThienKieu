@@ -94,7 +94,6 @@ const valuesReducer = createSlice({
   },
 });
 
-export const { handelChangeInputAction, handleSubmitAction } =
-  valuesReducer.actions;
+export const { handelChangeInputAction } = valuesReducer.actions;
 
 export default valuesReducer.reducer;

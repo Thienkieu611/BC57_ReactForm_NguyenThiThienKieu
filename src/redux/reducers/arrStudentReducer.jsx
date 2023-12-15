@@ -12,7 +12,7 @@ const initialState = {
       id: "12345678",
       name: "Nguyễn Thị Thiên Kiều",
       phone: "0978421609",
-      email: "thienkieu611@gmail.com",
+      email: "cybersoft@gmail.com",
     },
   ],
   studentEdit: {
@@ -21,7 +21,6 @@ const initialState = {
     phone: "",
     email: "",
   },
-  itemSearch: [],
 };
 
 const arrStudentReducer = createSlice({
@@ -44,7 +43,7 @@ const arrStudentReducer = createSlice({
     },
     updateStudentAction: (state, action) => {
       //find stu có id bằng stu update
-      let stuIndex = state.arrStudent.findIndexΩ(
+      let stuIndex = state.arrStudent.findIndex(
         (stu) => stu.id === action.payload.id
       );
       // Nếu tìm thấy sinh viên, cập nhật thông tin
@@ -53,15 +52,33 @@ const arrStudentReducer = createSlice({
       }
     },
     searchStudentAction: (state, action) => {
-      //   const keyword = action.payload.toLowerCase();
-      //   console.log(keyword);
-      //   const searchItem = state.arrStudent.filter((item) =>
-      //     item.id.includes(keyword)
+      const keyword = action.payload.toLowerCase();
+
+      const itemSearch = [...state.arrStudent];
+      console.log("ban dau", itemSearch);
+
+      let searchResults = state.arrStudent.filter((item) =>
+        item.email.toLowerCase().includes(keyword)
+      );
+
+      // if (keyword.trim() !== "") {
+      //   console.log("khac rong");
+      //   let searchResults = state.arrStudent.filter((item) =>
+      //     item.email.toLowerCase().includes(keyword)
       //   );
-      //   console.log(searchItem);
-      // state.itemSearch.push(...searchItem);
-      // console.log(state.itemSearch);
-      //state.arrStudent = state.itemSearch;
+      //   if (searchResults.length > 0) {
+      //     return { ...state, arrStudent: searchResults };
+      //   }
+      // } else {
+      //   console.log("= rong");
+      //   return { ...state, arrStudent: [...state.arrStudent] };
+      // }
+      return {
+        ...state,
+        arrStudent: searchResults,
+      };
+
+      // return state.arrStudent;
     },
   },
 });

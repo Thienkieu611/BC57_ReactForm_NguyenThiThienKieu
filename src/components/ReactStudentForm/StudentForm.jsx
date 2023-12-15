@@ -7,24 +7,24 @@ import {
 } from "../../redux/reducers/arrStudentReducer";
 
 export class StudentForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      valueEdit: props.valuesState,
-    };
-  }
-  static getDerivedStateFromProps(newProps, currentState) {
-    // console.log("new", newProps);
-    // console.log("curr", currentState.valueEdit);
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     valueEdit: props.valuesState,
+  //   };
+  // }
+  // static getDerivedStateFromProps(newProps, currentState) {
+  // console.log("new", newProps);
+  // console.log("curr", currentState.valueEdit);
 
-    if (currentState.valueEdit.id !== newProps.studentEditState.id) {
-      return {
-        valueEdit: newProps.studentEditState,
-      };
-    }
+  //   if (currentState.valueEdit.id !== newProps.studentEditState.id) {
+  //     return {
+  //       valueEdit: newProps.studentEditState,
+  //     };
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
   // setStateInput = (e) => {
   //   this.setState({
   //     valueEdit: e.target.value,
@@ -49,9 +49,9 @@ export class StudentForm extends Component {
       studentEditState,
     } = this.props;
 
-    let { valueEdit } = this.state;
+    //let { valueEdit } = this.state;
 
-    console.log("edit", valueEdit);
+    //console.log("edit", valueEdit);
     return (
       <div className=" mt-5">
         <form
@@ -75,7 +75,7 @@ export class StudentForm extends Component {
                     className="form-control"
                     id="id"
                     name="id"
-                    //value={valueEdit.id}
+                    //value={studentEditState.id}
                     onInput={(e) => {
                       const { id, value } = e.target;
 
